@@ -1,24 +1,23 @@
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 
-headers_vision = {'Ocp-Apim-Subscription-Key': 'API-KEY'}
-vision_base_url = "https://southcentralus.api.cognitive.microsoft.com/vision/v2.0/"​
-
 headers = {
     # Request headers
     'Content-Type': 'application/json',
-    'Ocp-Apim-Subscription-Key': 'API-KEY',
+    'Ocp-Apim-Subscription-Key': '',
 }
 
 params = urllib.parse.urlencode({
     # Request parameters
-    'visualFeatures': 'Categories',
-    'details': '{string}',
-    'language': 'en',
+    'visualFeatures': 'categories,tags',
+    'details': 'landmarks',
+    'language': 'en'
 })
+
+data = {"url": "https://www.aigaming.com/Images/aiWebsiteLogo.png"}
 
 try:
     conn = http.client.HTTPSConnection('southcentralus.api.cognitive.microsoft.com')
-    conn.request("POST", "/vision/v3.0/analyze?%s" % params, "{body}", headers)
+    conn.request("POST", "/vision/v3.0/analyze?%s" % params, "{data}", headers)
     response = conn.getresponse()
     data = response.read()
     print(data)
